@@ -1,6 +1,6 @@
 # This is API for main client 
 
-Client lies [here](https://github.com/alzaburetz/restrictor)
+Client lies [here](https://github.com/alzaburetz/restrictor.git)
 
 To get this API
 
