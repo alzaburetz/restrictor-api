@@ -5,6 +5,8 @@ Client lies [here](https://github.com/alzaburetz/restrictor.git)
 To get this API
 
 ```
+mkdir -p $GOROOT/github/alzaburetz/restrictor-api
+cd $GOROOT/github/alzaburetz/restrictor-api
 git clone github.com/alzaburetz/restrictor-api
 ```
 You also would need sqlite driver and mux router
