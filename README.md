@@ -7,6 +7,11 @@ To get this API
 ```
 git clone github.com/alzaburetz/restrictor-api
 ```
+You also would need sqlite driver and mux router
+```
+go get github.com/gorilla/mux
+go get github.com/mattn/go-sqlite3
+```
 
 ## To test this API
 
