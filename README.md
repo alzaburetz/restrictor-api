@@ -7,7 +7,7 @@ To get this API
 ```
 mkdir -p $GOROOT/github/alzaburetz/restrictor-api
 cd $GOROOT/github/alzaburetz/restrictor-api
-git clone github.com/alzaburetz/restrictor-api
+git clone https://github.com/alzaburetz/restrictor-api
 ```
 You also would need sqlite driver and mux router
 ```
@@ -28,7 +28,7 @@ go build
 Clone client
 
 ```
-git clone github.com/alzaburetz/restrictor
+git clone https://github.com/alzaburetz/restrictor
 cd path/to/client
 go run main.go
 ```
