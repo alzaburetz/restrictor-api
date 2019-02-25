@@ -10,10 +10,13 @@ import (
 	"net/http"
 )
 
+var db *sql.DB
+var err error
+
 func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 	var restriction models.Restriction
 	var restrictions []models.Restriction
-	db, err := sql.Open("sqlite3", "./database.db3")
+	db, err = sql.Open("sqlite3", "./database.db3")
 	if err != nil {
 		log.Printf("Error connection to database: %v", err)
 	}
@@ -38,7 +41,7 @@ func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 func handleUser(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	var users []models.User
-	db, err := sql.Open("sqlite3", "./database.db3")
+	db, err = sql.Open("sqlite3", "./database.db3")
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
@@ -58,7 +61,7 @@ func handleUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleGroups(w http.ResponseWriter, r *http.Request) {
-	db, err := sql.Open("sqlite3", "./database.db3")
+	db, err = sql.Open("sqlite3", "./database.db3")
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
