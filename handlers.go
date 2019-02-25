@@ -12,7 +12,7 @@ import (
 
 func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 	var restriction models.Restriction
-	var rest []models.Restriction
+	var restrictions []models.Restriction
 	db, err := sql.Open("sqlite3", "./database.db3")
 	if err != nil {
 		log.Printf("Error connection to database: %v", err)
@@ -25,7 +25,7 @@ func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 	for res.Next() {
 		err = res.Scan(&restriction.ID, &restriction.App, &restriction.Rule, &restriction.Time,
 			&restriction.HF, &restriction.HT, &restriction.Exec, &restriction.Group)
-		rest = append(rest, restriction)
+		restrictions = append(restrictions, restriction)
 		if err != nil {
 			log.Printf("Error displayong data: %v", err)
 		}
@@ -63,18 +63,17 @@ func handleGroups(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("%v", err)
 	}
 
-	var ug models.Usergroup
-	var ugs []models.Usergroup
-	//var usergroups models.Usergroups
+	var usergroup models.Usergroup
+	var usergroups []models.Usergroup
 	res, err := db.Query(`SELECT * FROM usergroup`)
 
 	for res.Next() {
-		err = res.Scan(&ug.ID, &ug.Groupname)
+		err = res.Scan(&usergroup.ID, &usergroup.Groupname)
 		if err != nil {
 			log.Print(err)
 		}
 
-		ugs = append(ugs, ug)
+		usergroups = append(usergroups, usergroup)
 	}
-	json.NewEncoder(w).Encode(ugs)
+	json.NewEncoder(w).Encode(usergroups)
 }
