@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/alzaburetz/myrestAPI/models"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
 )
 
-func handleHome(w http.ResponseWriter, r *http.Request) {
+func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 	var restriction models.Restriction
 	var rest []models.Restriction
 	db, err := sql.Open("sqlite3", "./database.db3")
@@ -30,13 +31,7 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-	var restrictions models.Restrictions
-	restrictions.Restrict = rest
-	byteval, err := json.Marshal(restrictions)
-	if err != nil {
-		log.Printf("%v",err)
-	}
-	fmt.Fprintf(w, "%v\n", string(byteval))
+	json.NewEncoder(w).Encode(rest)
 
 }
 
@@ -60,10 +55,28 @@ func handleUser(w http.ResponseWriter, r *http.Request) {
 		err = res.Scan(&user.ID, &user.Username, &user.Group)
 		users = append(users,user)
 	}
+	json.NewEncoder(w).Encode(users)
+}
 
-	var userss models.Users
-	userss.Users = users
+func handleGroups (w http.ResponseWriter, r *http.Request) {
+	db, err := sql.Open("sqlite3", "./database.db3")
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
 
-	byteval, _  := json.Marshal(userss)
-	fmt.Fprintf(w, "%v", string(byteval))
+	var ug models.Usergroup
+	var ugs []models.Usergroup
+	//var usergroups models.Usergroups
+	res, err := db.Query(`SELECT * FROM usergroup`)
+
+
+	for res.Next() {
+		err = res.Scan(&ug.ID, &ug.Groupname)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		ugs = append(ugs, ug)
+	}
+	json.NewEncoder(w).Encode(ugs)
 }

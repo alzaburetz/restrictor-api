@@ -11,6 +11,3 @@ type Restriction struct {
 	Group int `json:"user_gr"`
 }
 
-type Restrictions struct {
-	Restrict []Restriction `json:"restrictions"`
-}
