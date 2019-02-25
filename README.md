@@ -36,7 +36,12 @@ go run main.go
 
 Edit data in database
 
-**Enjoy!**
+## TO-DO LIST
+- [ ] Database [context](https://github.com/jinzhu/gorm.git)
+- [ ] URI Rework
+- [ ] Add background workers (Automate db processes)
+- [ ] Handle Admin-panel
+- [ ] Split to packages
 
 
 
