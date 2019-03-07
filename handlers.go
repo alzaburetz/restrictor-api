@@ -8,6 +8,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
+	"strings"
 )
 
 var db *sql.DB
@@ -20,7 +21,27 @@ func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("Error connection to database: %v", err)
 	}
-	res, err := db.Query(`SELECT * FROM restriction`)
+	index := strings.LastIndex(r.URL.Path,"/")
+	user := r.URL.Path[index+1:]
+	log.Println(user)
+	ugroup, err := db.Query(`SELECT group_id FROM user WHERE username=?`,user)
+	if err != nil {
+		log.Println(err)
+	}
+	defer func() {
+		err = ugroup.Close()
+		if err != nil {
+			log.Println("Error closing connection")
+		}
+	}()
+	var group int
+	for ugroup.Next() {
+		err = ugroup.Scan(&group)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	res, err := db.Query(`SELECT * FROM restriction WHERE user_gr=?`,group)
 	if err != nil {
 		log.Printf("Error reading from database: %v", err)
 	}

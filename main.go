@@ -9,7 +9,7 @@ import (
 func main() {
 	port := ":3000"
 	r := mux.NewRouter()
-	r.HandleFunc("/restrictions", restrictionsIndex).Methods("GET")
+	r.HandleFunc("/restrictions/{user}", restrictionsIndex).Methods("GET")
 	r.HandleFunc("/restrictions/add", restrictionsAdd).Methods("POST","GET")
 	r.HandleFunc("/users", handleUser).Methods("GET")
 	r.HandleFunc("/usergroups", handleGroups).Methods("GET")
