@@ -34,7 +34,7 @@ func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-	json.NewEncoder(w).Encode(rest)
+	json.NewEncoder(w).Encode(restrictions)
 
 }
 
@@ -79,4 +79,29 @@ func handleGroups(w http.ResponseWriter, r *http.Request) {
 		usergroups = append(usergroups, usergroup)
 	}
 	json.NewEncoder(w).Encode(usergroups)
+}
+
+func restrictionsAdd(w http.ResponseWriter, r *http.Request) {
+	if (r.Method == "GET") {
+		http.ServeFile(w,r,"addrestriction.html")
+	}
+	if (r.Method == "POST") {
+		db, err := sql.Open("sqlite3","./database.db3")
+		if err != nil {
+			log.Println(err)
+		}
+		defer db.Close()
+		_, err = db.Exec(`INSERT INTO restriction(app,rule,time,hours_from,hours_to,executable,user_gr) VALUES(?,?,?,?,?,?,?)`,
+			r.FormValue("app"),
+			r.FormValue("rule"),
+			r.FormValue("time"),
+			r.FormValue("hours_from"),
+			r.FormValue("hours_to"),
+			r.FormValue("executable"),
+			r.FormValue("user"))
+		if err != nil {
+			log.Println(err)
+		}
+
+	}
 }
