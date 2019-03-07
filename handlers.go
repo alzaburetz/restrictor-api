@@ -21,10 +21,10 @@ func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("Error connection to database: %v", err)
 	}
-	index := strings.LastIndex(r.URL.Path,"/")
+	index := strings.LastIndex(r.URL.Path, "/")
 	user := r.URL.Path[index+1:]
-	log.Println(user)
-	ugroup, err := db.Query(`SELECT group_id FROM user WHERE username=?`,user)
+	log.Printf("Got request from %s", user)
+	ugroup, err := db.Query(`SELECT group_id FROM user WHERE username=?`, user)
 	if err != nil {
 		log.Println(err)
 	}
@@ -41,7 +41,7 @@ func restrictionsIndex(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 	}
-	res, err := db.Query(`SELECT * FROM restriction WHERE user_gr=?`,group)
+	res, err := db.Query(`SELECT * FROM restriction WHERE user_gr=?`, group)
 	if err != nil {
 		log.Printf("Error reading from database: %v", err)
 	}
@@ -103,11 +103,11 @@ func handleGroups(w http.ResponseWriter, r *http.Request) {
 }
 
 func restrictionsAdd(w http.ResponseWriter, r *http.Request) {
-	if (r.Method == "GET") {
-		http.ServeFile(w,r,"addrestriction.html")
+	if r.Method == "GET" {
+		http.ServeFile(w, r, "addrestriction.html")
 	}
-	if (r.Method == "POST") {
-		db, err := sql.Open("sqlite3","./database.db3")
+	if r.Method == "POST" {
+		db, err := sql.Open("sqlite3", "./database.db3")
 		if err != nil {
 			log.Println(err)
 		}

@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Add restriction</title>
+    <style>
+        .form {
+            position: absolute;
+        }
+        input[type="text"] {
+            width: 200px;
+            position: relative;
+        }
+        input[type="number"] {
+            width: 40px;
+        }
+    </style>
 </head>
 <body>
+<div class="form">
     <form action="http://localhost:3000/restrictions/add" method="POST">
         <label for="app">Application name</label>
         <input type="text" name="app"/>
@@ -36,5 +49,6 @@
         </select>
         <input type="submit" value="Submit">
     </form>
+</div>
 </body>
 </html>
